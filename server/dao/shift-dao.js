@@ -11,6 +11,7 @@ function getFilePath(id) {
 async function create(shift) {
   const id = crypto.randomBytes(16).toString("hex");
   const newShift = { id, ...shift };
+  if (!newShift.workerIds) newShift.workerIds = [];
   fs.writeFileSync(getFilePath(id), JSON.stringify(newShift));
   return newShift;
 }

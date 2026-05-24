@@ -25,8 +25,8 @@ async function updateAbl(req, res) {
       return;
     }
 
-    if (!body.workerId) {
-      res.status(400).json({ error: "ID pracovníka je povinné." });
+    if (!body.workerIds || !Array.isArray(body.workerIds) || body.workerIds.length === 0) {
+      res.status(400).json({ error: "Seznam pracovníků je povinný." });
       return;
     }
 
@@ -36,19 +36,21 @@ async function updateAbl(req, res) {
       return;
     }
 
-    const worker = await workerDao.get(body.workerId);
-    if (!worker) {
-      res.status(404).json({ error: "Pracovník nenalezen." });
-      return;
-    }
-
-    const allShifts = await shiftDao.list();
-    const workerShifts = allShifts.filter(s => s.workerId === body.workerId && s.date === body.date && s.id !== body.id);
-
-    for (const s of workerShifts) {
-      if (body.startTime < s.endTime && body.endTime > s.startTime) {
-        res.status(400).json({ error: "Pracovník již má směnu v tomto časovém rozmezí." });
+    for (const workerId of body.workerIds) {
+      const worker = await workerDao.get(workerId);
+      if (!worker) {
+        res.status(404).json({ error: `Pracovník s ID ${workerId} nenalezen.` });
         return;
+      }
+
+      const allShifts = await shiftDao.list();
+      const workerShifts = allShifts.filter(s => s.workerIds.includes(workerId) && s.date === body.date && s.id !== body.id);
+
+      for (const s of workerShifts) {
+        if (body.startTime < s.endTime && body.endTime > s.startTime) {
+          res.status(400).json({ error: `Pracovník s ID ${workerId} již má směnu v tomto časovém rozmezí.` });
+          return;
+        }
       }
     }
 

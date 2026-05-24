@@ -24,7 +24,7 @@ Data - jako JSON přímo na disk - oddělené soubory (pracovník, směna) - mí
 
 **Pracovník (Worker)** – A person who can be assigned to work shifts. Unikátní ID a jméno.
 
-**Směna (Shift)** – A work shift scheduled on a specific date and time. Unikátní ID, datum, čas začátku, čas konce a ID přiřazeného pracovníka. Jeden pracovník může mít více směn, ale nesmí se časově překrývat.
+**Směna (Shift)** – A work shift scheduled on a specific date and time. Unikátní ID, datum, čas začátku, čas konce a seznam ID přiřazených pracovníků. Jedna směna může mít více pracovníků, jeden pracovník nesmí mít dvě překrývající se směny.
 
 
 ## API endpointy

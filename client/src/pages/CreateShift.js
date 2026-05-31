@@ -12,7 +12,7 @@ function CreateShift() {
   useEffect(() => {
     fetch('http://localhost:8888/worker/list')
       .then(res => res.json())
-      .then(data => setWorkerList(data.itemList));
+      .then(data => setWorkerList(data)); // ?
   }, []);
 
   function handleSubmit() {

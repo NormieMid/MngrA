@@ -74,3 +74,6 @@ Server je dostupný na adrese `http://localhost:8888`.
 
 - Node.js
 - Express.js
+
+## Bezpečnost
+Aplikace je určena pro uživatele s výhradním přístupek ke svému soukromému PC a proto nic není ošetřeno, není potřeba, jako například jméno pracovníka proti injection útoku atd.
